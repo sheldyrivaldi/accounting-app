@@ -28,6 +28,7 @@ router.get('/search', (req, res)=>{
     }
 })
 
+
 router.post('/', (req,res)=>{
     usersc.createUser(db, req, res)
 })

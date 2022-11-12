@@ -10,19 +10,9 @@ app.post('/', (req, res, next)=>{
             message: "Bad request! Input product name as string."
         })
     }
-    if(trc.productNameBody(req).length <= 0 || trc.productNameBody > 144){
-        return res.status(400).json({
-            message: "Bad request! Product name is not null and max 144 chararcters."
-        })
-    }
     if(typeof(trc.categoryBody(req)) != "string"){
         return res.status(400).json({
             message: "Bad request! Input category as string."
-        })
-    }
-    if(trc.categoryBody(req).length <= 0 || trc.categoryBody > 144){
-        return res.status(400).json({
-            message: "Bad request! Category is not null and max 144 chararcters."
         })
     }
     if(typeof(trc.priceBody(req)) != "number"){

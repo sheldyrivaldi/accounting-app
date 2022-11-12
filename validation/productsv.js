@@ -194,21 +194,6 @@ app.use('/search',(req, res, next)=>{
             message: `Bad request! Input product name max 144 charachters.`
         })
      }
-     if(productsc.productCodeQuery(req) > 144){
-        return res.status(400).json({
-            message: `Bad request! Input product code max 144 charachters.`
-        })
-     }
-     if(productsc.barcodeQuery(req) > 144){
-        return res.status(400).json({
-            message: `Bad request! Input barcode max 144 charachters.`
-        })
-     }
-     if(productsc.categoryQuery(req) > 144){
-        return res.status(400).json({
-            message: `Bad request! Input category max 144 charachters.`
-        })
-     }
      if (productsc.productNameQuery(req) != undefined){
         db.query(`SELECT * FROM products WHERE product_name = "${productsc.productNameQuery(req)}";`, function (err, products) {
             if (err) throw err

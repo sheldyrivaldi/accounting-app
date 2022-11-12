@@ -38,7 +38,7 @@ app.use('/search', (req, res, next)=>{
             message: "Bad Request! Please input id above 0."
         }) 
     }
-    if(categoriesc.categoryNameQuery(req).length > 144){
+    if(categoriesc.categoryNameQuery(req) > 144){
         return res.status(400).json({
             message: "Bad Request! Max 144 characters."
         })
