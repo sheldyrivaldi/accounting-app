@@ -65,7 +65,7 @@ function createTransactions(db, req, res){
     let month = now.getMonth() + 1
     let year = now.getFullYear()
     db.query(`INSERT INTO transactions (product_name, category, price, quantity, total, transaction_date) 
-    VALUE ("${productNameBody(req)}", "${categoryBody(req)}", ${priceBody(req)}, ${quantityBody(req)}, ${totalBody(req)}, "${year}-${month}-${day}" );`, function(err, transactions){
+    VALUES ("${productNameBody(req)}", "${categoryBody(req)}", ${priceBody(req)}, ${quantityBody(req)}, ${totalBody(req)}, "${year}-${month}-${day}" );`, function(err, transactions){
             if (err) throw err
             res.status(200).json({message: "Transaction successfully!"})
             return

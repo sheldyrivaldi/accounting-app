@@ -1,15 +1,8 @@
 const mysql = require('mysql2')
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: 'sheldy',
-    database: "accounting_app"
-})
+require('dotenv').config()
+const connection = mysql.createConnection(process.env.DATABASE_URL)
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-})
+console.log('Connected to PlanetScale!')
 
 
-module.exports = con
+module.exports = connection

@@ -1,4 +1,4 @@
-//==================================>>>> FUNCTION PRODUCTS QUERY VALUE 
+//==================================>>>> FUNCTION PRODUCTS QUERY VALUE
 function idBody(req){
     return req.body.id
 }
@@ -12,7 +12,7 @@ function dateBody(req){
     return req.body.date
 }
 
-//==================================>>>>  FUNCTION PRODUCTS BODY VALUE 
+//==================================>>>>  FUNCTION PRODUCTS BODY VALUES 
 function idQuery(req){
     return req.query.id
 }

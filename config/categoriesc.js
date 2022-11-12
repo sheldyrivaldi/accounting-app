@@ -32,7 +32,7 @@ function getCategory(db, req, res){
 
 function createCategory(db, req, res){
     db.query(`INSERT INTO categories (category_name) 
-    VALUE ("${categoryNameBody(req)}");`, function(err, categories){
+    VALUES ("${categoryNameBody(req)}");`, function(err, categories){
             if (err) throw err
             res.status(200).json({message: "Category added successfully!"})
             return

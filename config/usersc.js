@@ -59,7 +59,7 @@ function createUser(db, req, res){
         let month = now.getMonth() + 1
         let year = now.getFullYear()
         db.query(`INSERT INTO users (username, password, email, phone_number, register_date) 
-        VALUE ("${usernameBody(req)}", "${passwordBody(req)}", "${emailBody(req)}", "${phoneNumberBody(req)}", "${year}-${month}-${day}" );`, function(err, users){
+        VALUES ("${usernameBody(req)}", "${passwordBody(req)}", "${emailBody(req)}", "${phoneNumberBody(req)}", "${year}-${month}-${day}" );`, function(err, users){
                 if (err) throw err
                 res.status(200).json({message: "User added successfully!"})
                 return
