@@ -55,8 +55,8 @@ app.use('/search', (req, res, next)=>{
     })
 })
 
-app.put('/', (req, res, next)=>{
-    if(categoriesc.idBody(req) <= 0){
+app.use('/:id', (req, res, next)=>{
+    if(categoriesc.idParams(req) <= 0){
         return res.status(400).json({
             message: "Bad Request! Please input id above 0."
         })
@@ -66,12 +66,7 @@ app.put('/', (req, res, next)=>{
             message: "Bad Request! Please input category name as string."
         })
     }
-    if(categoriesc.categoryNameBody(req) == undefined){
-        return res.status(400).json({
-            message: "ERROR!"
-        })
-    }
-    db.query(`SELECT * FROM categories WHERE id = "${categoriesc.idBody(req)}";`, function (err, categories) {
+    db.query(`SELECT * FROM categories WHERE id = "${categoriesc.idParams(req)}";`, function (err, categories) {
         if (err) throw err
         if (categories.length <= 0) {
             return res.status(404).json({message: "No category found!"})

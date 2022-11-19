@@ -5,6 +5,9 @@ function idQuery(req){
 function categoryNameQuery(req){
     return req.query.category_name
 }
+function idParams(req){
+    return req.params.id
+}
 
 //==================================>>>>FUNCTION BODY CATEGORY
 function idBody(req){
@@ -39,7 +42,7 @@ function createCategory(db, req, res){
     })
 }
 function updateCategory(db, req, res){
-    db.query(`UPDATE categories SET category_name = "${categoryNameBody(req)}" WHERE id = ${idBody(req)};`, function(err,categories){
+    db.query(`UPDATE categories SET category_name = "${categoryNameBody(req)}" WHERE id = ${idParams(req)};`, function(err,categories){
         if (err) throw err
         res.status(200).json({message: "Category updated successfully!"})
     })
@@ -47,7 +50,7 @@ function updateCategory(db, req, res){
 }
 
 function deleteCategory(db, req, res){
-    db.query(`DELETE from categories WHERE category_name = "${categoryNameQuery(req)}";`,function(err, categories){
+    db.query(`DELETE from categories WHERE id = "${idParams(req)}";`,function(err, categories){
         if (err) throw err
         res.status(200).json({message: "Category deleted successfully!"})
     })
@@ -64,5 +67,6 @@ module.exports = {
     getCategory: getCategory,
     updateCategory: updateCategory,
     createCategory: createCategory,
-    deleteCategory: deleteCategory
+    deleteCategory: deleteCategory,
+    idParams: idParams
 }

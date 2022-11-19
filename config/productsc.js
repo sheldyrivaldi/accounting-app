@@ -20,6 +20,9 @@ function sellingPriceQuery(req){
 function quantityQuery(req){
     return req.query.quantity
 }
+function idParams(req){
+    return req.params.id
+}
 
 //==================================>>>>  FUNCTION PRODUCTS BODY VALUE 
 function idBody(req){
@@ -77,7 +80,7 @@ function updateProduct(db, req, res){
     category = "${categoryBody(req)}",
     selling_price = ${sellingPriceBody(req)},
     quantity = ${quantityBody(req)}
-    WHERE id = ${idBody(req)};`, function(err, products){
+    WHERE id = ${idParams(req)};`, function(err, products){
             if (err) throw err
             res.status(200).json({message: "Product updated successfully!"})
     })
@@ -85,7 +88,7 @@ function updateProduct(db, req, res){
 }
 
 function deleteProduct(db, req, res){
-    db.query(`DELETE from products WHERE product_name = "${productNameQuery(req)}";`,function(err, products){
+    db.query(`DELETE from products WHERE id = "${idParams(req)}";`,function(err, products){
             if (err) throw err
             res.status(200).json({message: "Product deleted successfully!"})
     })

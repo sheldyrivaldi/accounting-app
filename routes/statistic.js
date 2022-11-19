@@ -40,16 +40,5 @@ router.get('/products',(req, res)=>{
     })
 })
 
-router.get('/cashflow', (req, res)=>{
-    let sql = `SELECT 
-    (SELECT SUM(total) FROM transactions) as Income,
-    (SELECT SUM(price) FROM expenses) as Expense,
-    (SELECT SUM(total) FROM transactions) - (SELECT SUM(price) FROM expenses) as Balance;`
-    db.query(sql, function(err, statistic){
-        if (err) throw err
-        res.status(200).json(statistic)
-    })
-})
-
 
 module.exports = router

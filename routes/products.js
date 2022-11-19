@@ -37,7 +37,7 @@ router.get('/search', (req, res)=> {
     }
 })
 // Update a product
-router.put('/', (req, res)=> {
+router.put('/:id', (req, res)=> {
     productsc.updateProduct(db, req, res)
 })
 
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
 })
 
 // Delete a product
-router.delete('/search', (req, res)=>{
+router.delete('/:id', (req, res)=>{
     productsc.deleteProduct(db, req, res)
 })
 

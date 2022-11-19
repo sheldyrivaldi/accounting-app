@@ -33,11 +33,11 @@ router.post('/', (req,res)=>{
     usersc.createUser(db, req, res)
 })
 
-router.put('/', (req, res)=>{
+router.put('/:id', (req, res)=>{
     usersc.updateUser(db, req, res)
 })
 
-router.delete('/search', (req, res)=>{
+router.delete('/:id', (req, res)=>{
     usersc.deleteUser(db, req, res)
 })
 

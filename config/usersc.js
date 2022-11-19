@@ -14,8 +14,9 @@ function phoneNumberQuery(req){
 function registerDateQuery(req){
         return req.query.register_date
 }
-
-
+function idParams(req){
+        return req.params.id
+}
 
 //==================================>>>>FUNCTION BODY USERS
 function idBody(req){
@@ -73,20 +74,19 @@ function updateUser(db, req, res){
                 password = "${passwordBody(req)}",
                 email = "${emailBody(req)}",
                 phone_number = "${phoneNumberBody(req)}"
-                WHERE id = ${idBody(req)};`, function(err, users){
+                WHERE id = ${idParams(req)};`, function(err, users){
                 if (err) throw err
                 res.status(200).json({message: "User updated successfully!"})
                 return
         })
 }
 function deleteUser(db, req, res){
-        db.query(`DELETE from users WHERE username = "${usernameQuery(req)}";`,function(err, users){
+        db.query(`DELETE from users WHERE id = "${idParams(req)}";`,function(err, users){
                 if (err) throw err
                 res.status(200).json({message: "User deleted successfully!"})
         })
         return
 }
-
 
 
 
@@ -109,5 +109,6 @@ module.exports = {
        getUser: getUser,
        createUser: createUser,
        updateUser: updateUser,
-       deleteUser: deleteUser
+       deleteUser: deleteUser,
+       idParams: idParams
 }

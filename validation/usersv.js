@@ -6,7 +6,7 @@ app.use(express.json())
 
 app.use('/search', (req, res, next)=>{
     let regex = new RegExp(/^\d{2}\-\d{2}-\d{4}$/)
-    if(usersc.idQuery(req) <= 0){
+    if(usersc.idParams(req) <= 0){
         return res.status(400).json({
             message: "Bad request! Please input id above 0"
         })
@@ -26,29 +26,29 @@ app.use('/search', (req, res, next)=>{
             message: "Bad request! Phone number max 50 characters."
         })
     }
-    if(regex.test(usersc.registerDateQuery(req)) == false){
+    if(!regex.test(usersc.registerDateQuery(req)) == false){
         return res.status(400).json({
             message: "Bad request! Please input date according to the format YYYY-MM-DD"
         })
     }
-    db.query(`SELECT * FROM users WHERE username = "${usersc.usernameQuery(req)}";`, function (err, users) {
+    db.query(`SELECT * FROM users WHERE id = "${usersc.idQuery(req)}";`, function (err, users) {
         if (err) throw err
-        if (users.length <= 0) {
+        if (usersc.idQuery(req)  != undefined && users.length <= 0) {
             return res.status(404).json({message: "User not found!"})
         } else {
-            db.query(`SELECT * FROM users WHERE email = "${usersc.emailQuery(req)}";`, function (err, users) {
+            db.query(`SELECT * FROM users WHERE username = "${usersc.usernameQuery(req)}";`, function (err, users) {
                 if (err) throw err
-                if (users.length <= 0) {
+                if (usersc.usernameQuery(req) != undefined && users.length <= 0) {
                     return res.status(404).json({message: "User not found!"})
                 } else {
-                    db.query(`SELECT * FROM users WHERE phone_number = "${usersc.phoneNumberQuery(req)}";`, function (err, users) {
+                    db.query(`SELECT * FROM users WHERE email = "${usersc.emailQuery(req)}";`, function (err, users) {
                         if (err) throw err
-                        if (users.length <= 0) {
+                        if (usersc.emailQuery(req) != undefined && users.length <= 0) {
                             return res.status(404).json({message: "User not found!"})
                         } else {
-                            db.query(`SELECT * FROM users WHERE register_date = "${usersc.register_date(req)}";`, function (err, users) {
+                            db.query(`SELECT * FROM users WHERE phone_number = "${usersc.phoneNumberQuery(req)}";`, function (err, users) {
                                 if (err) throw err
-                                if (users.length <= 0) {
+                                if (usersc.phoneNumberQuery(req) != undefined && users.length <= 0) {
                                     return res.status(404).json({message: "User not found!"})
                                 } else {
                                     next()
@@ -123,13 +123,13 @@ app.post('/', (req, res, next)=>{
     })
 })
 
-app.put('/', (req, res, next)=>{
-    if(usersc.idBody(req) <= 0){
+app.put('/:id', (req, res, next)=>{
+    if(usersc.idParams(req) <= 0){
         return res.status(400).json({
             message: "Bad request! Please input id above 0."
         })
     }
-    if(typeof(usersc.idBody(req)) != "number"){
+    if(typeof(usersc.idParams(req)) != "number"){
         return res.status(400).json({
             message: "Bad request! Please input id as number."
         })
@@ -193,6 +193,7 @@ app.put('/', (req, res, next)=>{
         }
     })
 })
+
 
 
 
