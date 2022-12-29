@@ -1,95 +1,91 @@
-//==================================>>>>FUNCTION QUERY TRANSACTIONS
-function idQuery(req){
-    return req.query.id
+function idParams(req){
+    return req.params.id
 }
-function productNameQuery(req){
-    return req.query.product_name
+function titleBody(req){
+    return req.body.title
 }
-function categoryQuery(req){
-    return req.query.category
+function typeBody(req){
+    return req.body.type
 }
-function priceQuery(req){
-    return req.query.price
+function categoryNameBody(req){
+    return req.body.category_name
 }
-function quantityQuery(req){
-    return req.query.quantity
+function amountBody(req){
+    return req.body.amount
 }
-function totalQuery(req){
-    return req.query.total
-}
-function transactionDateQuery(req){
-    return req.query.transaction_date
-}
-
-//==================================>>>>FUNCTION BODY TRANSACTIONS
-function idBody(req){
-    return req.body.id
-}
-function productNameBody(req){
-    return req.body.product_name
-}
-function categoryBody(req){
-    return req.body.category
-}
-function priceBody(req){
-    return req.body.price
-}
-function quantityBody(req){
-    return req.body.quantity
-}
-function totalBody(req){
-    return req.body.total
+function walletBody(req){
+    return req.body.wallet
 }
 function transactionDateBody(req){
     return req.body.transaction_date
 }
 
-//==================================>>>>FUNCTION CRUD TRANSACTIONS
+
 function getAllTransactions(db, res){
-    db.query(`SELECT * FROM transactions;`,function(err, transactions){
-        if (err) throw err
+    db.query('SELECT * FROM transactions;', function(err, transactions){
+        if(err) throw err
         res.status(200).json(transactions)
-    })
-}
-function getTransaction(db, res, query, value ){
-    db.query(`SELECT * FROM transactions WHERE ${query} = "${value}"`, function(err, transactions){
-            if (err) throw err
-            res.status(200).json(transactions)
     })
     return
 }
-
-function createTransactions(db, req, res){
+function getTransaction(db, req, res){
+    db.query(`SELECT * FROM transactions WHERE id = ${idParams(req)};`, function(err, transactions){
+        if(err) throw err
+        res.status(200).json(transactions)
+    })
+    return
+}
+function createTransaction(db, req, res){
     let now = new Date
     let day = now.getDate()
     let month = now.getMonth() + 1
     let year = now.getFullYear()
-    db.query(`INSERT INTO transactions (product_name, category, price, quantity, total, transaction_date) 
-    VALUES ("${productNameBody(req)}", "${categoryBody(req)}", ${priceBody(req)}, ${quantityBody(req)}, ${totalBody(req)}, "${year}-${month}-${day}" );`, function(err, transactions){
+    db.query(`INSERT INTO transactions (title, type, category_name, amount, wallet, transaction_date) 
+        VALUES ("${titleBody(req)}", "${typeBody(req)}", "${categoryNameBody(req)}", ${amountBody(req)}, "${walletBody(req)}", "${year}-${month}-${day}");`, function(err, transactions){
             if (err) throw err
-            res.status(200).json({message: "Transaction successfully!"})
-            return
+            res.status(200).json({
+                message: "Transactions added successfully!"
+            })
+        })
+    
+}
+function updateTransaction(db, req, res){
+    db.query(`UPDATE transactions SET
+        title = "${titleBody(req)}",
+        type = "${typeBody(req)}",
+        category_name = "${categoryNameBody(req)}",
+        amount = ${amountBody(req)},
+        wallet = "${walletBody(req)}",
+        transaction_date = "${transactionDateBody(req)}"
+        WHERE id = ${idParams(req)};`, function(err, transactions){
+    if(err) throw err
+    res.status(200).json({
+        message: "Transaction updated successfully!"
+        })
     })
-
+    
+    return
+}
+function deleteTransaction(db, req, res){
+    db.query(`DELETE FROM transactions WHERE id = ${idParams(req)};`, function(err, transactions){
+        if (err) throw err
+        res.status(200).json({
+            message: "Transaction deleted successfully!"})
+        })
+    return
 }
 
-
 module.exports = {
-    idQuery:idQuery,
-    productNameQuery: productNameQuery,
-    categoryQuery: categoryQuery,
-    priceQuery: priceQuery,
-    quantityQuery: quantityQuery,
-    totalQuery: totalQuery,
-    transactionDateQuery: transactionDateQuery,
-    idBody: idBody,
-    productNameBody: productNameBody,
-    categoryBody: categoryBody,
-    priceBody: priceBody,
-    quantityBody: quantityBody,
-    totalBody: totalBody,
+    idParams: idParams,
+    titleBody: titleBody,
+    typeBody: typeBody,
+    categoryNameBody: categoryNameBody,
+    amountBody: amountBody,
+    walletBody: walletBody,
     transactionDateBody: transactionDateBody,
     getAllTransactions: getAllTransactions,
     getTransaction: getTransaction,
-    createTransactions: createTransactions
+    createTransaction: createTransaction,
+    updateTransaction: updateTransaction,
+    deleteTransaction: deleteTransaction
 }

@@ -9,8 +9,13 @@ require('dotenv').config()
 router.post('/', (req, res)=>{
     const username = req.body.username
     const password = req.body.password
-    db.query(`SELECT * FROM users WHERE username = "${username}" and password = "${password}";`, function (err, users) {
+    db.query(`SELECT * FROM user WHERE username = "${username}" and password = "${password}";`, function (err, users) {
         if (err) throw err
+        if (!username || !password){
+            return res.status(400).json({
+                message: "Please input username and password!"
+            })
+        }
         if (users <= 0) {
             return res.status(404).json({message: "Access denied! User not registered."})
         }

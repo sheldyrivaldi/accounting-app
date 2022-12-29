@@ -5,7 +5,7 @@ require('dotenv').config()
 app.use(express.json())
 
 
-function auth (req, res, next){
+app.use('/', (req, res, next)=>{
     const header = req.header('Authorization')
     const jwtKey = process.env.JWT_KEY
     if(!header){
@@ -23,6 +23,6 @@ function auth (req, res, next){
             message: "Invalid token!"
         })
     }
-}
+})
 
-module.exports = auth
+module.exports = app
