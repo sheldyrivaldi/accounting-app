@@ -12,6 +12,6 @@ $ npm install express mysql2 jsonwebtoken dotenv nodemon
 $ npm start
 ```
 ## How to Start in your Browser
-https://accounting-app.fly.dev
+https://personal-accounting.fly.dev
 
 How to use API and Example please open Collections in this folder with name Accounting App.postman_collection.json
